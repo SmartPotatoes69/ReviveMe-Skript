@@ -1,0 +1,98 @@
+#You may use the code but you must credit SmartPotatoes
+#req Addons: SkBee, Skript-Reflect
+
+options:
+    reviveitems: golden apple or enchanted golden apple
+
+
+on quit:
+    {ReviveMe::incapacitated::%player's uuid%} is set
+    kill player
+    delete {ReviveMe::incapacitated::%player's uuid%}
+    delete {ReviveMe::beingrevived::%player's uuid%}
+
+on death:
+    victim is a player
+    if {ReviveMe::incapacitated::%victim's uuid%} is set:
+        delete {ReviveMe::incapacitated::%victim's uuid%}
+        delete {ReviveMe::beingrevived::%victim's uuid%}
+        set glowing of victim to false
+        send action bar "" to victim
+    else:
+        clear all the potion effects of victim
+        cancel event
+        set {ReviveMe::incapacitated::%victim's uuid%} to true
+        add nbt compound of "{Invisible:1b,Invulnerable:1b,Silent:1b,NoAI:1b,NoGravity:1b}" to nbt compound of last spawned entity
+        apply invisibility of tier 1 without particles to last spawned entity for 100 days
+        set {_s} to last spawned entity
+        while {ReviveMe::incapacitated::%victim's uuid%} is set:
+            set glowing of victim to true
+            apply potion of slowness 100 without particles to victim for 100 days
+            teleport {_s} to location above victim's location
+            if {ReviveMe::beingrevived::%victim's uuid%} is set:
+                send action bar "&aYou are being revived &2%{ReviveMe::beingrevived::%victim's uuid%}%s" to victim
+            if {ReviveMe::beingrevived::%victim's uuid%} is not set:
+                send action bar "&cWait for help or jump to give up" to victim
+            wait 1 tick
+        kill {_s}
+
+
+
+
+on consume:
+    {ReviveMe::incapacitated::%player's uuid%} is set
+    if event-item is {@reviveitems}:
+        set glowing of player to false
+        delete {ReviveMe::beingrevived::%player's uuid%}
+        delete {ReviveMe::incapacitated::%player's uuid%}
+        send action bar "&aYou have revived yourself" to player
+        wait 1 tick
+        clear all the potion effects of player
+    else:
+        cancel event
+
+on damage:
+    {ReviveMe::incapacitated::%attacker's uuid%} is set
+    cancel event
+
+on break:
+    {ReviveMe::incapacitated::%player's uuid%} is set
+    cancel event
+
+on place:
+    {ReviveMe::incapacitated::%player's uuid%} is set
+    cancel event
+
+on jump:
+    {ReviveMe::incapacitated::%player's uuid%} is set
+    kill player
+
+
+on right click:
+    wait 1 tick
+    target entity is a player
+    set {_v} to target entity 
+    {ReviveMe::incapacitated::%{_v}'s uuid%} is set
+    {ReviveMe::beingrevived::%{_v}'s uuid%} is not set
+    set {ReviveMe::beingrevived::%{_v}'s uuid%} to 5
+    loop 5 times:
+        if target entity is not {_v}:
+            send action bar "" to player
+            send action bar "&cWait for help or jump to give up" to {_v}
+            delete {ReviveMe::beingrevived::%{_v}'s uuid%}
+            stop
+        send action bar "&2%{_v}% &awill be revived in &2%{ReviveMe::beingrevived::%{_v}'s uuid%}%s" to player
+        remove 1 from {ReviveMe::beingrevived::%{_v}'s uuid%}
+        wait 1 second
+    if target entity is not {_v}:
+        send action bar "" to player
+        send action bar "&cWait for help or jump to give up" to {_v}
+        delete {ReviveMe::beingrevived::%{_v}'s uuid%}
+        stop
+    set glowing of {_v} to false
+    clear all the potion effects of {_v}
+    send action bar "&aYou have revived &2%{_v}%" to player
+    send action bar "&aYou have been revived by &2%player%" to {_v}
+    delete {ReviveMe::beingrevived::%{_v}'s uuid%}
+    delete {ReviveMe::incapacitated::%{_v}'s uuid%}
+
