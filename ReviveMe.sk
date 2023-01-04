@@ -3,6 +3,7 @@
 #req Addons: SkBee
 
 options:
+    DeadHealth: 5
     reviveitems: golden apple or enchanted golden apple
 
 on quit:
@@ -23,17 +24,17 @@ on death:
         set glowing of victim to false
         send action bar "" to victim
     else:
-        set max health of victim to 5
         clear all the potion effects of victim
         cancel event
-        set {ReviveMe::incapacitated::%victim's uuid%} to max health of victim
+        set {ReviveMe::incapacitated::%victim's uuid%} to max health of victim 
+        set max health of victim to {@DeadHealth}
         spawn shulker at location above victim's location
         add nbt compound of "{Invisible:1b,Invulnerable:1b,Silent:1b,NoAI:1b,NoGravity:1b}" to nbt compound of last spawned entity
         apply invisibility of tier 1 without particles to last spawned entity for 100 days
         set {_s} to last spawned entity
         while {ReviveMe::incapacitated::%victim's uuid%} is set:
             set glowing of victim to true
-            apply potion of slowness 2 without particles to victim for 100 days
+            apply potion of slowness 3 without particles to victim for 100 days
             teleport {_s} to location above victim's location
             if {ReviveMe::beingrevived::%victim's uuid%} is set:
                 send action bar "&aYou are being revived &2%{ReviveMe::beingrevived::%victim's uuid%}%s" to victim
@@ -103,3 +104,4 @@ on right click:
     send action bar "&aYou have been revived by &2%player%" to {_v}
     delete {ReviveMe::beingrevived::%{_v}'s uuid%}
     delete {ReviveMe::incapacitated::%{_v}'s uuid%}
+
