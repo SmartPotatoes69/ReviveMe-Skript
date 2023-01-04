@@ -3,7 +3,7 @@ added Support for LifeSteal & Fixed bugs
 
 # ReviveMe Skript
 ReviveMe Skript made by @SmartPotatoes69
-You may use the code but you must link back to this <a href="">Github Page</a>
+You may use the code but you must link back to this <a href="https://github.com/SmartPotatoes69/ReviveMe">Github Page</a>
 
 added Support for LifeSteal & Fixed bugs
 
