@@ -1,12 +1,15 @@
 #You may use the code but you must credit SmartPotatoes
-#req Addons: SkBee, Skript-Reflect
+#added Support for LifeSteal & Fixed bugs 
+#req Addons: SkBee
 
 options:
     reviveitems: golden apple or enchanted golden apple
 
-
 on quit:
     {ReviveMe::incapacitated::%player's uuid%} is set
+    set max health of player to {ReviveMe::incapacitated::%player's uuid%}
+    set glowing of player to false
+    clear all the potion effects of player
     kill player
     delete {ReviveMe::incapacitated::%player's uuid%}
     delete {ReviveMe::beingrevived::%player's uuid%}
@@ -14,20 +17,23 @@ on quit:
 on death:
     victim is a player
     if {ReviveMe::incapacitated::%victim's uuid%} is set:
+        set max health of victim to {ReviveMe::incapacitated::%victim's uuid%}
         delete {ReviveMe::incapacitated::%victim's uuid%}
         delete {ReviveMe::beingrevived::%victim's uuid%}
         set glowing of victim to false
         send action bar "" to victim
     else:
+        set max health of victim to 5
         clear all the potion effects of victim
         cancel event
-        set {ReviveMe::incapacitated::%victim's uuid%} to true
+        set {ReviveMe::incapacitated::%victim's uuid%} to max health of victim
+        spawn shulker at location above victim's location
         add nbt compound of "{Invisible:1b,Invulnerable:1b,Silent:1b,NoAI:1b,NoGravity:1b}" to nbt compound of last spawned entity
         apply invisibility of tier 1 without particles to last spawned entity for 100 days
         set {_s} to last spawned entity
         while {ReviveMe::incapacitated::%victim's uuid%} is set:
             set glowing of victim to true
-            apply potion of slowness 100 without particles to victim for 100 days
+            apply potion of slowness 2 without particles to victim for 100 days
             teleport {_s} to location above victim's location
             if {ReviveMe::beingrevived::%victim's uuid%} is set:
                 send action bar "&aYou are being revived &2%{ReviveMe::beingrevived::%victim's uuid%}%s" to victim
@@ -43,6 +49,7 @@ on consume:
     {ReviveMe::incapacitated::%player's uuid%} is set
     if event-item is {@reviveitems}:
         set glowing of player to false
+        set max health of player to {ReviveMe::incapacitated::%player's uuid%}
         delete {ReviveMe::beingrevived::%player's uuid%}
         delete {ReviveMe::incapacitated::%player's uuid%}
         send action bar "&aYou have revived yourself" to player
@@ -90,9 +97,9 @@ on right click:
         delete {ReviveMe::beingrevived::%{_v}'s uuid%}
         stop
     set glowing of {_v} to false
+    set max health of player to {ReviveMe::incapacitated::%player's uuid%}
     clear all the potion effects of {_v}
     send action bar "&aYou have revived &2%{_v}%" to player
     send action bar "&aYou have been revived by &2%player%" to {_v}
     delete {ReviveMe::beingrevived::%{_v}'s uuid%}
     delete {ReviveMe::incapacitated::%{_v}'s uuid%}
-
