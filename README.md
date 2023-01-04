@@ -10,3 +10,4 @@ You may use the code but you must link back to this <a href="https://github.com/
 # **Update** 2023-01-04
 Fixed bugs
 optimized the skript
+added Dead Health
