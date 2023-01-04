@@ -7,7 +7,7 @@ You may use the code but you must link back to this <a href="https://github.com/
 - <a href="https://github.com/SkriptLang/Skript/releases">Skript</a>
 - <a href="https://github.com/ShaneBeee/SkBee/releases">SkBee</a>
 
-# **Update** 2023-01-04
+# **Newest Update** 2023-01-04
 Fixed bugs
 optimized the skript
 added Dead Health
