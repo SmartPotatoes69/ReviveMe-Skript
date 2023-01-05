@@ -1,5 +1,5 @@
-#You may use the code but you must credit SmartPotatoes or link back to the original github repository 
-#req Addons: SkBee
+#You may use the skript but you should credit SmartPotatoes or/and link back to the original github repository
+#Requirements: Skript, SkBee
 
 options:
     DeadHealth: 5
