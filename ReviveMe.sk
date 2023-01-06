@@ -1,5 +1,6 @@
 #You may use the skript but you should credit SmartPotatoes or/and link back to the original github repository
 #Requirements: Skript, SkBee
+#Version: 0.0.3
 
 options:
     DeadHealth: 5
@@ -29,6 +30,7 @@ on death:
         set max health of victim to {@DeadHealth}
         spawn shulker at location above victim's location
         add nbt compound of "{Invisible:1b,Invulnerable:1b,Silent:1b,NoAI:1b,NoGravity:1b}" to nbt compound of last spawned entity
+        set tag "ReviveMeBlocker" of nbt compound of last spawned entity to true
         apply invisibility of tier 1 without particles to last spawned entity for 100 days
         set {_s} to last spawned entity
         while {ReviveMe::incapacitated::%victim's uuid%} is set:
@@ -103,4 +105,9 @@ on right click:
     send action bar "&aYou have been revived by &2%player%" to {_v}
     delete {ReviveMe::beingrevived::%{_v}'s uuid%}
     delete {ReviveMe::incapacitated::%{_v}'s uuid%}
+
+on death:
+    victim is shulker
+    tag "ReviveMeBlocker" of nbt compound of victim is set
+    cancel drops
 
