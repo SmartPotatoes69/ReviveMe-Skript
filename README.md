@@ -6,7 +6,5 @@ You may use the skript but you should credit @SmartPotatoes69 or/and link back t
 - <a href="https://github.com/SkriptLang/Skript/releases">Skript</a>
 - <a href="https://github.com/ShaneBeee/SkBee/releases">SkBee</a>
 
-# **Newest Update** 2023-01-04
-Fixed bugs
-optimized the skript
-added Dead Health
+# **Newest Update** 2023-01-06
+Fixed so Shulker blocker doesn't drop shulker shells
