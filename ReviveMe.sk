@@ -1,6 +1,6 @@
 #You may use the skript but you should credit SmartPotatoes or/and link back to the original github repository
 #Requirements: Skript, SkBee
-#Version: 0.0.3
+#Version: 0.0.4
 
 options:
     DeadHealth: 5
@@ -82,6 +82,7 @@ on right click:
     target entity is a player
     set {_v} to target entity 
     {ReviveMe::incapacitated::%{_v}'s uuid%} is set
+    {ReviveMe::incapacitated::%player's uuid%} is not set
     {ReviveMe::beingrevived::%{_v}'s uuid%} is not set
     set {ReviveMe::beingrevived::%{_v}'s uuid%} to 5
     loop 5 times:
