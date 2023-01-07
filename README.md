@@ -7,4 +7,4 @@ You may use the skript but you should credit @SmartPotatoes69 or/and link back t
 - <a href="https://github.com/ShaneBeee/SkBee/releases">SkBee</a>
 
 # **Newest Update** 2023-01-07
-Fixed so you can't revive people while being knocked/dead
+Fixed some problems
